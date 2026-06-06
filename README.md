@@ -2,7 +2,7 @@
 
 A high-performance Spigot/Paper Minecraft plugin that bridges your in-game accounts with Discord roles using the Java Discord API (JDA). It runs entirely alongside your Minecraft server 24/7, automating role assignments, tracking seasonal wipes smoothly, and logging everything cleanly to Discord webhooks without causing server lag.
 
-
+---
 
 ## How It Works & DiscordSRV Integration
 
@@ -11,9 +11,12 @@ LinkedBot works by acting as a silent, automated listener that monitors your lin
 Here is exactly how the logic handles synchronization:
 
 ### 1. Linking Your Channel in DiscordSRV
-For this plugin to work, you must make sure that DiscordSRV is sending its account-linking notifications to the right place. 
-* Open your main **DiscordSRV** `config.yml` file.
-* Locate the `Channels` section and ensure your linking/bot channel is mapped correctly.
+For this plugin to work, a link channel needs to be set up in `plugins/discordsrv/config.yml`. 
+* Open the DiscordSRV config file and locate the `Channels` mapping (usually around line 30).
+* Ensure your linking/bot channel is mapped correctly using the `"link"` key.
+
+Example:
+`Channels: {"global": "1469739949854167243","link":"1492080151683399791"}`
 
 ### 2. Message Verification
 When a message lands in your designated target channel, LinkedBot goes through a strict verification checklist:
@@ -32,7 +35,7 @@ By default, DiscordSRV sends specific phrases when someone hooks up their accoun
 * **New Links:** If a user gets linked and doesn't have the roles yet, LinkedBot will fetch the message author directly from the Discord API (bypassing local cache limitations), simultaneously grant all roles listed under `add-roles`, strip any roles listed under `remove-roles` (like an "Unlinked" role), and add a success reaction to the user's original message.
 * **Already Linked Check:** If a user runs the link command again but already holds the required roles, the bot will bypass running extra API calls, react with a pause symbol, and log a notice to your webhook so your chat isn't flooded with duplicate role logs.
 
-
+---
 
 ## Features
 
@@ -42,7 +45,7 @@ By default, DiscordSRV sends specific phrases when someone hooks up their accoun
 * **Live Season Resets**: Includes a `/newseason` administrative slash command that wipes roles globally with real-time countdown updates sent back to Discord every 5 seconds.
 * **Fully Configurable**: Easily modify bot behaviors, target channel IDs, phrases, and custom reaction characters straight from `config.yml` without rewriting code.
 
-
+---
 
 ## Installation
 
@@ -51,6 +54,7 @@ By default, DiscordSRV sends specific phrases when someone hooks up their accoun
 3. Open `plugins/LinkedBot/config.yml` and insert your Discord Bot Token, Webhook URL, and respective Role/Channel IDs.
 4. Restart your server.
 
+---
 
 ## Configuration (`config.yml`)
 
